@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portfolio — Blueprint / Workbench Mockup</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper: #ece7d8;
+    --paper-2: #e2dcc8;
+    --paper-3: #d9d2ba;
+    --ink: #221d14;
+    --blue: #1f3a5f;
+    --blue-soft: #6c86a8;
+    --blue-faint: rgba(31,58,95,0.16);
+    --rust: #b5541a;
+    --rust-dark: #8c4114;
+    --rust-soft: rgba(181,84,26,0.14);
+    --muted: #6b6455;
+    --font-display: 'Archivo', sans-serif;
+    --font-body: 'Inter', sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:
+      linear-gradient(var(--blue-faint) 1px, transparent 1px),
+      linear-gradient(90deg, var(--blue-faint) 1px, transparent 1px),
+      var(--paper);
+    background-size:26px 26px, 26px 26px, auto;
+    color:var(--ink);
+    font-family:var(--font-body);
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit; text-decoration:none;}
+  .wrap{max-width:1180px; margin:0 auto; padding:0 32px;}
+  @media (max-width:640px){ .wrap{padding:0 20px;} }
+
+  /* ---------- nav ---------- */
+  header{
+    position:fixed; top:0; left:0; right:0; z-index:50;
+    background:rgba(236,231,216,0.88); backdrop-filter:blur(8px);
+    border-bottom:1.5px solid var(--blue);
+  }
+  nav{display:flex; align-items:center; justify-content:space-between; height:60px;}
+  .mark{font-family:var(--font-mono); font-size:13px; font-weight:500; color:var(--blue); letter-spacing:0.03em;}
+  .mark span{color:var(--muted);}
+  .nav-links{display:flex; align-items:center; gap:30px; font-size:14px; font-weight:500;}
+  .nav-links a:not(.nav-cta){color:var(--muted); transition:color .15s;}
+  .nav-links a:not(.nav-cta):hover{color:var(--ink);}
+  .nav-cta{
+    font-family:var(--font-mono); font-size:12px; color:var(--paper);
+    background:var(--blue); padding:8px 15px; border-radius:2px; letter-spacing:0.02em;
+  }
+  .nav-cta:hover{background:var(--rust);}
+  @media (max-width:760px){ .nav-links a:not(.nav-cta){display:none;} }
+
+  /* ---------- hero ---------- */
+  .hero{padding:150px 0 90px; display:grid; grid-template-columns:1.15fr 0.85fr; gap:48px; align-items:start;}
+  @media (max-width:900px){ .hero{grid-template-columns:1fr; padding:130px 0 60px; gap:48px;} }
+
+  .eyebrow{
+    font-family:var(--font-mono); font-size:11.5px; color:var(--blue);
+    letter-spacing:0.06em; margin-bottom:20px; padding-bottom:10px;
+    border-bottom:1px dashed var(--blue-soft); display:inline-block;
+  }
+  h1{
+    font-family:var(--font-display); font-weight:700; font-size:clamp(32px,4.2vw,50px);
+    line-height:1.1; letter-spacing:-0.01em; max-width:13ch;
+  }
+  h1 em{color:var(--rust); font-style:normal;}
+  .sub{margin-top:20px; color:var(--muted); font-size:16.5px; max-width:48ch;}
+
+  .spec-tags{margin-top:26px; display:flex; flex-wrap:wrap; gap:8px;}
+  .spec-tag{
+    font-family:var(--font-mono); font-size:11.5px; color:var(--blue);
+    border:1px solid var(--blue-soft); padding:5px 10px; border-radius:2px; background:rgba(255,255,255,0.35);
+  }
+
+  .hero-ctas{margin-top:34px; display:flex; gap:14px; flex-wrap:wrap;}
+  .btn-primary, .btn-ghost{
+    font-family:var(--font-mono); font-size:12.5px; padding:11px 18px; border-radius:2px; letter-spacing:0.01em;
+  }
+  .btn-primary{background:var(--blue); color:var(--paper); font-weight:500;}
+  .btn-primary:hover{background:var(--rust);}
+  .btn-ghost{border:1px solid var(--ink); color:var(--ink);}
+  .btn-ghost:hover{border-color:var(--rust); color:var(--rust);}
+
+  /* ---------- title block (signature element) ---------- */
+  .titleblock{
+    border:1.5px solid var(--blue); background:rgba(255,255,255,0.4); border-radius:2px; overflow:hidden;
+  }
+  .tb-row{display:grid; grid-template-columns:1fr 1fr; border-bottom:1px solid var(--blue-soft);}
+  .tb-cell{padding:10px 14px; border-right:1px solid var(--blue-soft);}
+  .tb-cell:last-child{border-right:none;}
+  .tb-cell .k{font-family:var(--font-mono); font-size:9.5px; color:var(--muted); letter-spacing:0.05em; margin-bottom:3px;}
+  .tb-cell .v{font-family:var(--font-mono); font-size:12.5px; color:var(--ink); font-weight:500;}
+  .tb-queue{padding:14px 16px 16px;}
+  .tb-queue .k{font-family:var(--font-mono); font-size:9.5px; color:var(--muted); letter-spacing:0.05em; margin-bottom:10px;}
+  .queue-item{
+    display:flex; justify-content:space-between; align-items:center;
+    font-family:var(--font-mono); font-size:12px; padding:7px 0; border-top:1px dashed var(--blue-soft);
+  }
+  .queue-item:first-child{border-top:none;}
+  .queue-item .name{color:var(--ink);}
+  .status{display:flex; align-items:center; gap:6px; font-size:10.5px; letter-spacing:0.03em;}
+  .status.complete{color:var(--blue);}
+  .status.printing{color:var(--rust);}
+  .status.queued{color:var(--muted);}
+  .dot{width:5px; height:5px; border-radius:50%; background:currentColor;}
+  .status.printing .dot{animation:pulse 1.4s ease-in-out infinite;}
+  @keyframes pulse{0%,100%{opacity:1;} 50%{opacity:0.25;}}
+  @media (prefers-reduced-motion: reduce){ .status.printing .dot{animation:none;} }
+
+  /* ---------- section shell ---------- */
+  section{padding:80px 0;}
+  .section-head{
+    display:flex; align-items:baseline; justify-content:space-between; gap:20px;
+    margin-bottom:36px; border-bottom:1.5px solid var(--blue); padding-bottom:16px;
+  }
+  .section-num{font-family:var(--font-mono); color:var(--muted); font-size:12px;}
+  .section-title{font-family:var(--font-display); font-size:24px; font-weight:700; margin-top:4px;}
+  .section-link{font-family:var(--font-mono); font-size:12px; color:var(--blue);}
+  .section-link:hover{color:var(--rust);}
+
+  /* ---------- work grid (spec sheets) ---------- */
+  .work-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:22px;}
+  @media (max-width:900px){ .work-grid{grid-template-columns:1fr;} }
+  .spec-card{border:1.5px solid var(--blue); border-radius:2px; background:rgba(255,255,255,0.35); overflow:hidden; transition:transform .18s, box-shadow .18s;}
+  .spec-card:hover{transform:translateY(-3px); box-shadow:4px 4px 0 var(--blue-faint);}
+  .spec-screen{
+    aspect-ratio:16/10; position:relative; margin:14px; border:1px dashed var(--blue-soft);
+    background:linear-gradient(135deg, var(--paper-2), var(--paper-3));
+    display:flex; align-items:flex-end; justify-content:flex-end;
+  }
+  .dim-corner{position:absolute; width:12px; height:12px;}
+  .dim-corner.tl{top:-1px; left:-1px; border-top:1.5px solid var(--rust); border-left:1.5px solid var(--rust);}
+  .dim-corner.br{bottom:-1px; right:-1px; border-bottom:1.5px solid var(--rust); border-right:1.5px solid var(--rust);}
+  .play-badge{
+    margin:10px; font-family:var(--font-mono); font-size:10.5px; color:var(--rust);
+    border:1px solid var(--rust); padding:4px 9px; border-radius:20px; background:rgba(236,231,216,0.85);
+  }
+  .card-body{padding:6px 16px 14px;}
+  .card-title{font-family:var(--font-display); font-size:17px; font-weight:700; margin-bottom:6px;}
+  .card-desc{color:var(--muted); font-size:13.5px; margin-bottom:14px;}
+  .layer-bar{height:5px; background:repeating-linear-gradient(90deg, var(--rust) 0 6px, transparent 6px 10px); opacity:0.55; margin-bottom:12px;}
+  .tb-strip{
+    display:flex; justify-content:space-between; font-family:var(--font-mono); font-size:10px; color:var(--muted);
+    border-top:1px solid var(--blue-soft); padding-top:10px; letter-spacing:0.02em;
+  }
+  .tb-strip b{color:var(--blue);}
+
+  /* ---------- BOM (lab) ---------- */
+  .bom-note{color:var(--muted); font-size:14px; max-width:58ch; margin-bottom:28px;}
+  .bom{width:100%; border-collapse:collapse; font-size:14px;}
+  .bom thead th{
+    font-family:var(--font-mono); font-size:10.5px; color:var(--muted); text-align:left;
+    letter-spacing:0.05em; padding:0 12px 10px; border-bottom:1.5px solid var(--blue);
+  }
+  .bom tbody td{padding:16px 12px; border-bottom:1px dashed var(--blue-soft); vertical-align:top;}
+  .bom tbody tr:hover{background:rgba(31,58,95,0.04);}
+  .bom-no{font-family:var(--font-mono); color:var(--rust); font-weight:500; width:50px;}
+  .bom-desc{font-family:var(--font-display); font-weight:700; width:22%;}
+  .bom-material{font-family:var(--font-mono); font-size:12.5px; color:var(--blue); width:22%;}
+  .bom-notes{color:var(--muted);}
+  @media (max-width:700px){
+    .bom thead{display:none;}
+    .bom, .bom tbody, .bom tr, .bom td{display:block; width:100%;}
+    .bom tbody tr{padding:14px 0; border-bottom:1px dashed var(--blue-soft);}
+    .bom tbody td{padding:3px 0; border-bottom:none;}
+  }
+
+  /* ---------- footer (drawing sheet bar) ---------- */
+  footer{border-top:1.5px solid var(--blue); padding:0;}
+  .sheet-bar{display:grid; grid-template-columns:2fr repeat(3,1fr); }
+  @media (max-width:760px){ .sheet-bar{grid-template-columns:1fr 1fr;} }
+  .sheet-cell{padding:24px 20px; border-right:1px solid var(--blue-soft);}
+  .sheet-cell:last-child{border-right:none;}
+  .sheet-cell .k{font-family:var(--font-mono); font-size:9.5px; color:var(--muted); letter-spacing:0.05em; margin-bottom:8px;}
+  .sheet-cell .v{font-family:var(--font-mono); font-size:13px; color:var(--ink);}
+  .sheet-cell .v a{display:block; color:var(--blue); margin-bottom:4px;}
+  .sheet-cell .v a:hover{color:var(--rust);}
+  .sheet-cell .footer-title{font-family:var(--font-display); font-weight:700; font-size:17px; line-height:1.3; max-width:22ch;}
+
+  /* ---------- filament spool scroll progress ---------- */
+  .spool-widget{
+    position:fixed; right:24px; top:50%; transform:translateY(-50%); z-index:55;
+    width:92px; text-align:center; user-select:none; pointer-events:none;
+  }
+  .spool-widget svg{width:100%; height:auto; display:block;}
+  #spinGroup{transform-origin:60px 60px;}
+  .coil-ring{transition:opacity .1s linear;}
+  .flange-rim{fill:none; stroke:var(--blue); }
+  .bolt-hole{fill:none; stroke:var(--blue-soft); stroke-width:1.3;}
+
+  .feed-line{
+    position:fixed; top:calc(50% + 48px); right:70px; width:2px; height:42vh;
+    transform-origin:top; transform:scaleY(0);
+    background-image:repeating-linear-gradient(var(--rust) 0 6px, transparent 6px 10px);
+    background-size:2px 16px;
+    -webkit-mask-image:linear-gradient(to bottom, black 75%, transparent 100%);
+    mask-image:linear-gradient(to bottom, black 75%, transparent 100%);
+    opacity:0.55; z-index:40; pointer-events:none;
+  }
+  .feed-tip{
+    position:fixed; right:66px; width:0; height:0;
+    border-left:5px solid transparent; border-right:5px solid transparent;
+    border-top:7px solid var(--rust); opacity:0; z-index:41; pointer-events:none;
+    transition:opacity .15s linear;
+  }
+  @media (max-width:900px){ .feed-line, .feed-tip{display:none;} }
+  .spool-label{
+    font-family:var(--font-mono); font-size:9px; color:var(--muted);
+    letter-spacing:0.08em; margin-top:8px;
+  }
+  .spool-pct{
+    font-family:var(--font-mono); font-size:16px; font-weight:500; color:var(--ink);
+    margin-top:2px;
+  }
+  .spool-status{
+    display:inline-flex; align-items:center; gap:5px; margin-top:6px;
+    font-family:var(--font-mono); font-size:9.5px; letter-spacing:0.05em;
+  }
+  .spool-status .dot{width:5px; height:5px; border-radius:50%; background:currentColor;}
+  .spool-status.st-down{color:var(--rust);}
+  .spool-status.st-up{color:var(--blue);}
+  .spool-status.st-idle{color:var(--muted);}
+  @media (max-width:900px){
+    .spool-widget{right:14px; width:64px; top:auto; bottom:18px; transform:none;
+      background:rgba(236,231,216,0.85); border:1px solid var(--blue-soft); border-radius:4px; padding:8px 6px;}
+  }
+</style>
+</head>
+<body>
+
+<div class="spool-widget" id="spoolWidget" aria-hidden="true">
+  <svg viewBox="0 0 120 120">
+    <circle class="flange-rim" cx="60" cy="60" r="52" stroke-width="1.4"/>
+    <circle class="flange-rim" cx="60" cy="60" r="49" stroke-width="1" opacity="0.5"/>
+    <g id="spinGroup">
+      <circle class="coil-ring" data-k="8" cx="60" cy="60" r="47"    fill="none" stroke="var(--rust)" stroke-width="2.6"/>
+      <circle class="coil-ring" data-k="7" cx="60" cy="60" r="43.25" fill="none" stroke="var(--rust-dark)" stroke-width="2.6"/>
+      <circle class="coil-ring" data-k="6" cx="60" cy="60" r="39.5"  fill="none" stroke="var(--rust)" stroke-width="2.6"/>
+      <circle class="coil-ring" data-k="5" cx="60" cy="60" r="35.75" fill="none" stroke="var(--rust-dark)" stroke-width="2.6"/>
+      <circle class="coil-ring" data-k="4" cx="60" cy="60" r="32"    fill="none" stroke="var(--rust)" stroke-width="2.6"/>
+      <circle class="coil-ring" data-k="3" cx="60" cy="60" r="28.25" fill="none" stroke="var(--rust-dark)" stroke-width="2.6"/>
+      <circle class="coil-ring" data-k="2" cx="60" cy="60" r="24.5"  fill="none" stroke="var(--rust)" stroke-width="2.6"/>
+      <circle class="coil-ring" data-k="1" cx="60" cy="60" r="20.75" fill="none" stroke="var(--rust-dark)" stroke-width="2.6"/>
+      <circle class="coil-ring" data-k="0" cx="60" cy="60" r="17"    fill="none" stroke="var(--rust)" stroke-width="2.6"/>
+      <circle class="bolt-hole" cx="60" cy="17" r="3.2"/>
+      <circle class="bolt-hole" cx="88.5" cy="33.5" r="3.2"/>
+      <circle class="bolt-hole" cx="88.5" cy="86.5" r="3.2"/>
+      <circle class="bolt-hole" cx="60" cy="103" r="3.2"/>
+      <circle class="bolt-hole" cx="31.5" cy="86.5" r="3.2"/>
+      <circle class="bolt-hole" cx="31.5" cy="33.5" r="3.2"/>
+    </g>
+    <circle cx="60" cy="60" r="14" fill="var(--paper)" stroke="var(--blue)" stroke-width="1.5"/>
+    <path d="M60 55 L60 65 M55 60 L65 60" stroke="var(--blue)" stroke-width="1.3" stroke-linecap="round"/>
+  </svg>
+  <div class="spool-label">FILAMENT</div>
+  <div class="spool-pct" id="spoolPct">100%</div>
+  <div class="spool-status st-idle" id="spoolStatus"><span class="dot"></span>IDLE</div>
+</div>
+
+<div class="feed-line" id="feedLine"></div>
+<div class="feed-tip" id="feedTip"></div>
+
+<header>
+  <div class="wrap">
+    <nav>
+      <div class="mark">J.KADE<span>_studio</span></div>
+      <div class="nav-links">
+        <a href="#work">Work</a>
+        <a href="#lab">Materials</a>
+        <a href="#about">About</a>
+        <a href="#contact" class="nav-cta">Résumé ↓</a>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="wrap" style="display:contents;">
+      <div>
+        <div class="eyebrow">SHEET 01 / REV 03 — OPEN FOR GAME &amp; WEB ROLES</div>
+        <h1>I draft the plan, then <em>build</em> it — in code, in mesh, and in PLA.</h1>
+        <p class="sub">Full-stack game &amp; web developer. Most projects ship with assets I modeled myself and a soundtrack I wrote — one plan, carried through every material.</p>
+        <div class="spec-tags">
+          <span class="spec-tag">TypeScript</span>
+          <span class="spec-tag">Three.js</span>
+          <span class="spec-tag">Unity / C#</span>
+          <span class="spec-tag">Blender</span>
+          <span class="spec-tag">PrusaSlicer</span>
+        </div>
+        <div class="hero-ctas">
+          <a href="#work" class="btn-primary">View work →</a>
+          <a href="#" class="btn-ghost">▶ Play latest demo</a>
+        </div>
+      </div>
+
+      <div class="titleblock">
+        <div class="tb-row">
+          <div class="tb-cell"><div class="k">DRAWN BY</div><div class="v">J. Kade</div></div>
+          <div class="tb-cell"><div class="k">SCALE</div><div class="v">1 : 1</div></div>
+        </div>
+        <div class="tb-row">
+          <div class="tb-cell"><div class="k">SHEET</div><div class="v">01 OF 04</div></div>
+          <div class="tb-cell"><div class="k">DATE</div><div class="v">2026.07.30</div></div>
+        </div>
+        <div class="tb-queue">
+          <div class="k">PRINT QUEUE — CURRENT DISCIPLINES</div>
+          <div class="queue-item"><span class="name">game_dev.stl</span><span class="status complete"><span class="dot"></span>COMPLETE</span></div>
+          <div class="queue-item"><span class="name">web_dev.stl</span><span class="status complete"><span class="dot"></span>COMPLETE</span></div>
+          <div class="queue-item"><span class="name">model_assets.stl</span><span class="status printing"><span class="dot"></span>PRINTING</span></div>
+          <div class="queue-item"><span class="name">soundtrack.wav</span><span class="status queued"><span class="dot"></span>QUEUED</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="work">
+    <div class="wrap">
+      <div class="section-head">
+        <div><div class="section-num">02 / SELECTED WORK</div><div class="section-title">Shipped &amp; playable</div></div>
+        <a href="#" class="section-link">Full case studies →</a>
+      </div>
+
+      <div class="work-grid">
+        <div class="spec-card">
+          <div class="spec-screen">
+            <div class="dim-corner tl"></div><div class="dim-corner br"></div>
+            <span class="play-badge">▶ play in browser</span>
+          </div>
+          <div class="card-body">
+            <div class="card-title">Drift Protocol</div>
+            <p class="card-desc">Physics-based browser racer built in three.js, holding 60fps on mid-range mobile.</p>
+            <div class="layer-bar"></div>
+            <div class="tb-strip"><span><b>SCALE</b> 1:4</span><span><b>REV</b> 03</span><span><b>STATUS</b> shipped</span></div>
+          </div>
+        </div>
+
+        <div class="spec-card">
+          <div class="spec-screen">
+            <div class="dim-corner tl"></div><div class="dim-corner br"></div>
+            <span class="play-badge">▶ trailer</span>
+          </div>
+          <div class="card-body">
+            <div class="card-title">Hollow Signal</div>
+            <p class="card-desc">Narrative horror game — I modeled every prop in the derelict station myself.</p>
+            <div class="layer-bar"></div>
+            <div class="tb-strip"><span><b>SCALE</b> 1:8</span><span><b>REV</b> 02</span><span><b>STATUS</b> shipped</span></div>
+          </div>
+        </div>
+
+        <div class="spec-card">
+          <div class="spec-screen">
+            <div class="dim-corner tl"></div><div class="dim-corner br"></div>
+            <span class="play-badge">↗ live site</span>
+          </div>
+          <div class="card-body">
+            <div class="card-title">Studio Site — Client</div>
+            <p class="card-desc">Agency site with a real-time WebGL particle hero and CMS-driven case studies.</p>
+            <div class="layer-bar"></div>
+            <div class="tb-strip"><span><b>SCALE</b> 1:1</span><span><b>REV</b> 05</span><span><b>STATUS</b> live</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="lab">
+    <div class="wrap">
+      <div class="section-head">
+        <div><div class="section-num">03 / MATERIALS</div><div class="section-title">Bill of materials</div></div>
+        <a href="#" class="section-link">See all craft work →</a>
+      </div>
+      <p class="bom-note">Everything below mostly exists to serve the projects above — assets, prints, and sound built for the games and sites, not separate from them.</p>
+
+      <table class="bom">
+        <thead>
+          <tr><th>Item</th><th>Description</th><th>Material / Tool</th><th>Notes</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="bom-no">01</td>
+            <td class="bom-desc">3D Modeling</td>
+            <td class="bom-material">Blender / ZBrush</td>
+            <td class="bom-notes">Hard-surface &amp; character assets, several shipped in the work above.</td>
+          </tr>
+          <tr>
+            <td class="bom-no">02</td>
+            <td class="bom-desc">3D Printing</td>
+            <td class="bom-material">PLA / PETG · FDM</td>
+            <td class="bom-notes">Functional prints — enclosures, hinges, articulated figures.</td>
+          </tr>
+          <tr>
+            <td class="bom-no">03</td>
+            <td class="bom-desc">Music &amp; Sound</td>
+            <td class="bom-material">Ableton, field recording</td>
+            <td class="bom-notes">Soundtracks and sound design for two of the projects above.</td>
+          </tr>
+          <tr>
+            <td class="bom-no">04</td>
+            <td class="bom-desc">Writing</td>
+            <td class="bom-material">Plain text, ink</td>
+            <td class="bom-notes">Short fiction and worldbuilding docs that feed directly into the games.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <footer id="contact">
+    <div class="sheet-bar">
+      <div class="sheet-cell">
+        <div class="k">CONTACT</div>
+        <div class="footer-title">Open to full-time &amp; contract game/web roles.</div>
+      </div>
+      <div class="sheet-cell">
+        <div class="k">REACH</div>
+        <div class="v"><a href="#">Email</a><a href="#">LinkedIn</a></div>
+      </div>
+      <div class="sheet-cell">
+        <div class="k">WORK</div>
+        <div class="v"><a href="#">GitHub</a><a href="#">Itch.io</a></div>
+      </div>
+      <div class="sheet-cell">
+        <div class="k">SHEET NO.</div>
+        <div class="v">04 OF 04 — © 2026</div>
+      </div>
+    </div>
+  </footer>
+</main>
+
+<script>
+  (function(){
+    var rings = Array.prototype.slice.call(document.querySelectorAll('.coil-ring'));
+    var spin = document.getElementById('spinGroup');
+    var pct = document.getElementById('spoolPct');
+    var status = document.getElementById('spoolStatus');
+    var feedLine = document.getElementById('feedLine');
+    var feedTip = document.getElementById('feedTip');
+    if(!rings.length) return;
+
+    var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var NUM_RINGS = rings.length; // 9 wraps, k=0 innermost .. k=8 outermost
+
+    var lastY = window.scrollY || document.documentElement.scrollTop;
+    var angle = 0;
+    var idleTimer = null;
+    var ticking = false;
+
+    function setStatus(dir){
+      status.className = 'spool-status ' + (dir === 'down' ? 'st-down' : dir === 'up' ? 'st-up' : 'st-idle');
+      status.innerHTML = '<span class="dot"></span>' + (dir === 'down' ? 'UNWINDING' : dir === 'up' ? 'REWINDING' : 'IDLE');
+    }
+
+    function update(){
+      ticking = false;
+      var doc = document.documentElement;
+      var scrollTop = window.scrollY || doc.scrollTop;
+      var maxScroll = doc.scrollHeight - doc.clientHeight;
+      var progress = maxScroll > 0 ? Math.min(1, Math.max(0, scrollTop / maxScroll)) : 0;
+
+      // remaining wraps, as a float so the outermost ring fades smoothly
+      // rather than popping off in a discrete step
+      var remaining = (1 - progress) * NUM_RINGS;
+      rings.forEach(function(ring){
+        var k = parseInt(ring.getAttribute('data-k'), 10);
+        var visibility = Math.min(1, Math.max(0, remaining - k));
+        ring.style.opacity = visibility;
+      });
+
+      pct.textContent = Math.round((1 - progress) * 100) + '%';
+
+      if(feedLine){
+        feedLine.style.transform = 'scaleY(' + progress + ')';
+      }
+      if(feedTip){
+        // feedLine top sits at spool-center + 48px; tip rides at its growing end
+        var lineTopPx = window.innerHeight * 0.5 + 48;
+        var lineMaxPx = window.innerHeight * 0.42;
+        feedTip.style.top = (lineTopPx + lineMaxPx * progress) + 'px';
+        feedTip.style.opacity = progress > 0.02 ? 0.75 : 0;
+      }
+
+      var delta = scrollTop - lastY;
+      if(!reduceMotion){
+        angle += delta * 0.55;
+        spin.style.transform = 'rotate(' + angle + 'deg)';
+      }
+
+      if(delta > 0.5){ setStatus('down'); }
+      else if(delta < -0.5){ setStatus('up'); }
+      clearTimeout(idleTimer);
+      idleTimer = setTimeout(function(){ setStatus('idle'); }, 500);
+
+      lastY = scrollTop;
+    }
+
+    window.addEventListener('scroll', function(){
+      if(!ticking){
+        requestAnimationFrame(update);
+        ticking = true;
+      }
+    }, { passive: true });
+
+    update();
+  })();
+</script>
+
+</body>
+</html>
